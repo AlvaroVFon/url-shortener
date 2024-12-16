@@ -1,0 +1,33 @@
+services:
+  app:
+    build: .
+    container_name: url-shortener-app
+    ports:
+      - '3000:3000'
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/url-shortener
+    depends_on:
+      - mongo
+    volumes:
+      - .:/usr/src/app
+    command: ['npm', 'run', 'dev']
+
+  mongo:
+    image: mongo:latest
+    container_name: url-shortener-mongo
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - '27017:27017'
+    restart: always
+  redis:
+    image: redis:latest
+    container_name: url-shortener-redis
+    ports:
+      - '6379:6379'
+    restart: always
+    volumes:
+      - redis-data:/data
+volumes:
+  mongo-data:
+  redis-data: 

@@ -2,7 +2,7 @@ import { Schema, model, Document } from 'mongoose';
 import { Url, PublicUrl } from '../interfaces/url.interface';
 import redis from '../config/redis';
 
-const TTL = process.env.REDIS_TTL ?? 60 * 60 * 24; 
+const TTL = process.env.REDIS_TTL ?? 60 * 60 * 24;
 
 const urlSchema = new Schema(
   {
@@ -38,4 +38,5 @@ const urlSchema = new Schema(
 urlSchema.post('save', (url: Url & Document) => {
   redis.set(url.url, url.shortUrl, 'EX', TTL);
 });
+
 export default model<Url & Document>('Url', urlSchema);

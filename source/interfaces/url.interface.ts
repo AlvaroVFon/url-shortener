@@ -1,7 +1,7 @@
 export interface Url {
   url: string;
   shortUrl: string;
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date;
 }
 

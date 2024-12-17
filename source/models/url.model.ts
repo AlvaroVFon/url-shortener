@@ -1,23 +1,35 @@
 import { Schema, model, Document } from 'mongoose';
-import UrlModel from '../interfaces/url.interface';
+import { Url, PublicUrl } from '../interfaces/url.interface';
 
-const urlSchema = new Schema({
-  url: {
-    type: String,
-    required: true,
+const urlSchema = new Schema(
+  {
+    url: {
+      type: String,
+      required: true,
+    },
+    shortUrl: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  shortUrl: {
-    type: String,
-    required: true,
+  {
+    methods: {
+      toPublicUrl(url: Url): PublicUrl {
+        return {
+          url: url.url,
+          shortUrl: url.shortUrl,
+        };
+      },
+    },
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+);
 
-export default model<UrlModel & Document>('Url', urlSchema);
+export default model<Url & Document>('Url', urlSchema);

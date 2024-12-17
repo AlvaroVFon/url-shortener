@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import Url from '../interfaces/url.interface';
+import { Url } from '../interfaces/url.interface';
 
 const urlSchema = Joi.object<Url>({
   url: Joi.string().uri().required(),
@@ -7,3 +7,5 @@ const urlSchema = Joi.object<Url>({
   createdAt: Joi.date().required(),
   updatedAt: Joi.date(),
 });
+
+export default urlSchema;

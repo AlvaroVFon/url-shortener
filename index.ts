@@ -5,7 +5,7 @@ const PORT = Number(process.env.PORT) || 3000;
 
 const app = express();
 
-async function middlewares() {}
+async function middlewares(){}
 async function routes() {
   app.get('/', (req, res) => {
     res.json({ message: 'Hello World' });

@@ -4,28 +4,24 @@ import crypto from 'node:crypto';
 import redis from '../config/redis';
 
 const TTL = process.env.REDIS_TTL ?? 60 * 60 * 24;
-const CACHE = process.env.CACHE ?? true;
+const CACHE = true;
 
 class UrlService {
   async createUrl(url: string): Promise<UrlInterface | string | null> {
     const cachedShortUrl = CACHE ? await this.getShortUrlFromRedis(url) : null;
 
-    console.log('Here');
-    console.log('cachedShortUrl', cachedShortUrl);
     if (cachedShortUrl !== null) {
-      console.log('Inside cachedShortUrl', cachedShortUrl);
       return cachedShortUrl;
     }
 
     const existingUrl = await Url.findOne({ url });
 
     if (existingUrl) {
-      console.log('Inside existingUrl');
       return existingUrl;
     }
 
     const shortUrl = crypto.randomUUID();
-    const newUrl = new Url({ url, shortUrl });
+    const newUrl = await Url.create({ url, shortUrl });
     await newUrl.save();
 
     if (CACHE) {

@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "author": {
-    "name": "Álvaro Villamrín",
+    "name": "Álvaro Villamarín",
     "email": "alvaro.vfon@gmail.com"
   },
   "license": "MIT",
@@ -13,7 +13,7 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
-    "test": "jest"
+    "test": "jest --verbose --forceExit"
   },
   "dependencies": {
     "cors": "^2.8.5",

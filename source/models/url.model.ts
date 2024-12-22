@@ -36,7 +36,7 @@ const urlSchema = new Schema(
 );
 
 urlSchema.post('save', (url: Url & Document) => {
-  redis.set(url.url, url.shortUrl, 'EX', TTL);
+  redis.set(url.shortUrl, url.url, 'EX', TTL);
 });
 
 export default model<Url & Document>('Url', urlSchema);

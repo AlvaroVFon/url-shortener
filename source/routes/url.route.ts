@@ -4,8 +4,7 @@ import { urlController } from '../controllers/url.controller';
 const router = Router();
 
 router
-  .post('/create', urlController.createUrl)
-  .get('/:url', urlController.getUrlFromShortUrl)
-  .get('/shortUrl', urlController.getShortUrlFromUrl);
+  .post('/', urlController.createUrl)
+  .get('/:url', urlController.getUrlFromShortUrl);
 
 export { router as urlRouter };

@@ -1,7 +1,7 @@
 import { HttpMessages, HttpStatusCodes } from '../utils/responsesEnum';
 
 class BadRequestException extends Error {
-  public status;
+  public status: number;
 
   constructor(message?: string) {
     super(message);

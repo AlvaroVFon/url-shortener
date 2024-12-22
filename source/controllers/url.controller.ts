@@ -1,14 +1,8 @@
 import { urlService } from '../services/url.service';
-import { Url, PublicUrl } from '../interfaces/url.interface';
+import { Url } from '../interfaces/url.interface';
 import { Request, Response } from 'express';
-import BadRequestException from '../exceptions/BadRequestException';
 import responseHelper from '../handlers/responseHandler';
 import { HttpMessages, HttpStatusCodes } from '../utils/responsesEnum';
-import { HttpResponse } from '../interfaces/response.interface';
-import { Http } from 'winston/lib/winston/transports';
-import NotFountException from '../exceptions/NotFoundException';
-
-//TODO: Revisar el controller, añádir comprobaciones, crear helpers para las responses
 
 class UrlController {
   async createUrl(req: Request, res: Response): Promise<Response> {
@@ -24,23 +18,59 @@ class UrlController {
     });
   }
 
-  async getUrlFromShortUrl(req: Request, res: Response): Promise<Response> {
-    const { shortUrl } = req.params;
-    const url = await urlService.getUrlFromShortUrl(shortUrl);
-    if (!url) {
-      throw new NotFountException();
+  async getUrlFromShortUrl(
+    req: Request,
+    res: Response,
+  ): Promise<void | Response> {
+    const { url } = req.params;
+
+    try {
+      const data = await urlService.getUrlFromShortUrl(url);
+
+      if (!data) {
+        return responseHelper({
+          res,
+          status: HttpStatusCodes.NOT_FOUND,
+          message: HttpMessages.NOT_FOUND,
+        });
+      }
+      return res.redirect(data);
+    } catch (error) {
+      return responseHelper({
+        res,
+        status: HttpStatusCodes.INTERNAL_SERVER_ERROR,
+        message: HttpMessages.INTERNAL_SERVER_ERROR,
+        error,
+      });
     }
-    return responseHelper({ res, status: HttpStatusCodes.OK, message: HttpMessages.SUCCESS, data: url })
   }
 
-  //TODO: Revisar return
-  async getShortUrlFromUrl(req: Request, res: Response): Promise<void> {
-    const { url } = req.body;
-    const shortUrl = await urlService.getShortUrlFromUrl(url);
-    if (!shortUrl) {
-      throw new NotFountException('Url not found')
+  async getShortUrlFromUrl(req: Request, res: Response): Promise<any> {
+    const { url } = req.params;
+    const data = await urlService.getShortUrlFromUrl(url);
+
+    try {
+      if (!data) {
+        return responseHelper({
+          res,
+          status: HttpStatusCodes.NOT_FOUND,
+          message: HttpMessages.NOT_FOUND,
+        });
+      }
+      responseHelper({
+        res,
+        status: HttpStatusCodes.OK,
+        message: HttpMessages.SUCCESS,
+        data: url,
+      });
+    } catch (error) {
+      responseHelper({
+        res,
+        status: HttpStatusCodes.NOT_FOUND,
+        message: HttpMessages.NOT_FOUND,
+        error,
+      });
     }
-    res.json({ shortUrl });
   }
 }
 

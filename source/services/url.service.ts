@@ -41,7 +41,7 @@ class UrlService {
       const cacheShortUrl = await this.getShortUrlFromRedis(url);
       return cacheShortUrl;
     }
-    const existingUrl = await Url.findOne({ url });
+    const existingUrl = await Url.findOne({ shortUrl: url });
     return existingUrl ? existingUrl.shortUrl : null;
   }
 

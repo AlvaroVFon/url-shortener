@@ -1,8 +1,8 @@
 import { HttpStatusCodes, HttpMessages } from '../utils/responsesEnum';
 
 class UnauthorizedException extends Error {
-  public status;
-  public message;
+  public status: number;
+  public message: string;
 
   constructor(message?: string) {
     super(message);

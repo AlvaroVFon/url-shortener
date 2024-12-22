@@ -1,7 +1,7 @@
 import winston from 'winston';
 
-function createLogger() {
-  const logger = winston.createLogger({
+function generateLogger() {
+  return winston.createLogger({
     format: winston.format.json(),
     transports: [
       new winston.transports.Console({
@@ -12,8 +12,6 @@ function createLogger() {
       }),
     ],
   });
-
-  return logger;
 }
 
-export { createLogger };
+export { generateLogger };

@@ -5,7 +5,6 @@ const router = Router();
 
 router
   .post('/', urlController.createUrl)
-  .get('/:url', urlController.getUrlFromShortUrl)
-  .get('/shortUrl', urlController.getShortUrlFromUrl);
+  .get('/:url', urlController.getUrlFromShortUrl);
 
 export { router as urlRouter };

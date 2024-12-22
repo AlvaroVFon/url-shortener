@@ -24,12 +24,4 @@ describe('services/url.service', () => {
     expect(dataBaseUrl).toBeDefined();
     expect(dataBaseUrl).toHaveProperty('_id');
   });
-
-  it('getShortUrlFromUrl() -> If exist should return shortUrl from database', async () => {
-    const url = 'someurl.com';
-    await urlService.createUrl(url);
-    const dbUrl = await urlService.getShortUrlFromUrl(url);
-    expect(dbUrl).toBeDefined();
-    expect(typeof dbUrl).toBe('string');
-  });
 });

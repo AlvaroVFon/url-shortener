@@ -44,34 +44,6 @@ class UrlController {
       });
     }
   }
-
-  async getShortUrlFromUrl(req: Request, res: Response): Promise<any> {
-    const { url } = req.params;
-    const data = await urlService.getShortUrlFromUrl(url);
-
-    try {
-      if (!data) {
-        return responseHelper({
-          res,
-          status: HttpStatusCodes.NOT_FOUND,
-          message: HttpMessages.NOT_FOUND,
-        });
-      }
-      responseHelper({
-        res,
-        status: HttpStatusCodes.OK,
-        message: HttpMessages.SUCCESS,
-        data: url,
-      });
-    } catch (error) {
-      responseHelper({
-        res,
-        status: HttpStatusCodes.NOT_FOUND,
-        message: HttpMessages.NOT_FOUND,
-        error,
-      });
-    }
-  }
 }
 
 export const urlController = new UrlController();

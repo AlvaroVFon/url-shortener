@@ -8,12 +8,6 @@ const CACHE = true;
 
 class UrlService {
   async createUrl(url: string): Promise<UrlInterface | string | null> {
-    const cachedShortUrl = CACHE ? await this.getShortUrlFromRedis(url) : null;
-
-    if (cachedShortUrl !== null) {
-      return cachedShortUrl;
-    }
-
     const existingUrl = await Url.findOne({ url });
 
     if (existingUrl) {
@@ -32,22 +26,14 @@ class UrlService {
   }
 
   async getUrlFromShortUrl(shortUrl: string): Promise<string | null> {
+    const cachedUrl = CACHE ? await redis.get(shortUrl) : null;
+
+    if (cachedUrl) {
+      return cachedUrl;
+    }
+
     const url = await Url.findOne({ shortUrl });
     return url ? url.url : null;
-  }
-
-  async getShortUrlFromUrl(url: string): Promise<string | null> {
-    if (CACHE) {
-      const cacheShortUrl = await this.getShortUrlFromRedis(url);
-      return cacheShortUrl;
-    }
-    const existingUrl = await Url.findOne({ shortUrl: url });
-    return existingUrl ? existingUrl.shortUrl : null;
-  }
-
-  async getShortUrlFromRedis(url: string): Promise<string | null> {
-    if (!CACHE) return null;
-    return await redis.get(url);
   }
 }
 

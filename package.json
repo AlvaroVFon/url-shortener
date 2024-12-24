@@ -13,7 +13,8 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
-    "test": "jest --verbose --forceExit"
+    "test": "jest --verbose --forceExit",
+    "coverage": "NODE_ENV=test npx jest ./tests --coverage --coverageReporters=\"text-summary\" "
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -25,7 +25,7 @@ async function loggerMiddleware(
       responseTime: `${duration}ms`,
     };
 
-    res.statusCode <= 400 && res.statusCode !== 500
+    res.statusCode < 400 && res.statusCode !== 500
       ? logger.info(logMessage)
       : logger.warn({
           ...logMessage,

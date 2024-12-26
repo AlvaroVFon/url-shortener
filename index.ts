@@ -17,7 +17,7 @@ async function middlewares() {
 }
 async function routes() {
   app.get('/', (req, res) => {
-    res.json({ message: 'Hello World' });
+    res.status(200).json({ status: 'ok' });
   });
   app.use('/url', urlRouter);
 }
@@ -33,3 +33,5 @@ async function main() {
 }
 
 main();
+
+export default app;

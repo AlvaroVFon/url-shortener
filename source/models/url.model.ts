@@ -22,6 +22,10 @@ const urlSchema = new Schema(
       type: Date,
       default: null,
     },
+    clicks: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     methods: {
@@ -35,8 +39,12 @@ const urlSchema = new Schema(
   },
 );
 
-urlSchema.post('save', (url: Url & Document) => {
-  redis.set(url.shortUrl, url.url, 'EX', TTL);
+urlSchema.post('save', async (url: Url & Document) => {
+  try {
+    await redis.set(url.shortUrl, url.url, 'EX', TTL);
+  } catch (error) {
+    console.error('Error saving to Redis:', error);
+  }
 });
 
 export default model<Url & Document>('Url', urlSchema);

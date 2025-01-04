@@ -3,9 +3,10 @@ export interface Url {
   shortUrl: string;
   createdAt?: Date;
   updatedAt?: Date;
+  clicks: Number;
 }
 
-export interface PublicUrl { 
+export interface PublicUrl {
   url: string;
   shortUrl: string;
 }

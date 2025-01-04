@@ -1,4 +1,5 @@
 import { urlService } from '../services/url.service';
+import { statsService } from '../services/stats.service';
 import { Url } from '../interfaces/url.interface';
 import { Request, Response } from 'express';
 import responseHelper from '../handlers/responseHandler';
@@ -43,6 +44,27 @@ class UrlController {
         error,
       });
     }
+  }
+
+  async getUrlClicks(req: Request, res: Response): Promise<Response> {
+    const { shortUrl } = req.params;
+
+    const clicks = await statsService.getUrlClicks(shortUrl);
+
+    if (clicks === null) {
+      return responseHelper({
+        res,
+        status: HttpStatusCodes.NOT_FOUND,
+        message: HttpMessages.NOT_FOUND,
+      });
+    }
+
+    return responseHelper({
+      res,
+      status: HttpStatusCodes.OK,
+      message: HttpMessages.SUCCESS,
+      data: clicks,
+    });
   }
 }
 

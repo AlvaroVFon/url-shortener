@@ -20,7 +20,7 @@ describe('getUrlClicks', () => {
     const result = await statsService.getUrlClicks(shortUrl);
 
     expect(result).toBe(10);
-    expect(redis.get).toHaveBeenCalledWith(`clicks:${shortUrl}`);
+    expect(redis.get).toHaveBeenCalledWith(`clicks: ${shortUrl}`);
   });
 
   it('should return the number of clicks from the database if not available in Redis', async () => {
@@ -33,7 +33,7 @@ describe('getUrlClicks', () => {
     const result = await statsService.getUrlClicks(shortUrl);
 
     expect(result).toBe(5);
-    expect(redis.get).toHaveBeenCalledWith(`clicks:${shortUrl}`);
+    expect(redis.get).toHaveBeenCalledWith(`clicks: ${shortUrl}`);
     expect(Url.findOne).toHaveBeenCalledWith({ shortUrl });
   });
 
@@ -46,7 +46,7 @@ describe('getUrlClicks', () => {
     const result = await statsService.getUrlClicks(shortUrl);
 
     expect(result).toBeNull();
-    expect(redis.get).toHaveBeenCalledWith(`clicks:${shortUrl}`);
+    expect(redis.get).toHaveBeenCalledWith(`clicks: ${shortUrl}`);
     expect(Url.findOne).toHaveBeenCalledWith({ shortUrl });
   });
 });

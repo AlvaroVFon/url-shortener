@@ -10,7 +10,7 @@ async function getUrlClicks(shortUrl: string): Promise<Number | null> {
 
   const clicksFromDb = await Url.findOne({ shortUrl });
 
-  return clicksFromDb ? clicksFromDb.clicks : null;
+  return clicksFromDb?.clicks ?? null;
 }
 
 export const statsService = {

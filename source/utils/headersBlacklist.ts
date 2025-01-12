@@ -1,1 +1,7 @@
-export const headerBlackList: string[] = ['accept', 'accept-encoding', 'connection','authorization', 'cookie'];
+export const headerBlackList: string[] = [
+  'accept',
+  'accept-encoding',
+  'connection',
+  'authorization',
+  'cookie',
+];
